@@ -1,0 +1,11 @@
+#usda 1.0
+(
+    endTimeCode = 200
+    startTimeCode = 1
+    subLayers = [
+        @c:/cedec2021/shotbuild/Shot002_layout.usda@,
+        @c:/cedec2021/shotbuild/Shot002_anim.usda@,
+        @c:/cedec2021/shotbuild/Shot002_lighting.usda@
+    ]
+)
+

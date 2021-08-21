@@ -1,0 +1,20 @@
+#usda 1.0
+
+def "Scene" (
+    prepend references = @./monkey_set.usda@
+)
+{
+    def "Light"
+    {
+        def DistantLight "DistantLight"
+        {
+            float inputs:angle = 1
+            float inputs:intensity = 10000
+            color3f inputs:shadow:color = (0, 1, 0)
+            float xformOp:rotateX = -45
+            float xformOp:rotateY = 90
+            uniform token[] xformOpOrder = ["xformOp:rotateY", "xformOp:rotateX"]
+        }
+    }
+}
+

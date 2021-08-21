@@ -1,0 +1,78 @@
+#usda 1.0
+(
+    defaultPrim = "Ground"
+)
+
+def "Ground"
+{
+    def Mesh "ground_geom" (
+        prepend references = @../model/plane.usda@
+    )
+    {
+        rel material:binding = </Ground/ground_mat>
+        float primvars:ri:attributes:displacementbound:sphere = 0.1
+    }
+
+    def Material "ground_mat"
+    {
+        token outputs:ri:displacement.connect = </Ground/ground_mat/DisplacementShader.outputs:displacement>
+        token outputs:ri:surface.connect = </Ground/ground_mat/pxrSurface.outputs:surface>
+
+        def Shader "stReader"
+        {
+            uniform token info:id = "UsdPrimvarReader_float2"
+            token inputs:varname = "st"
+            float2 outputs:result
+        }
+
+        def Shader "diffuseTexture"
+        {
+            uniform token info:id = "UsdUVTexture"
+            asset inputs:file = @../texture/rocks/diff.jpg@
+            float2 inputs:st.connect = </Ground/ground_mat/stReader.outputs:result>
+            float3 outputs:rgb
+        }
+
+        def Shader "displacementTexture"
+        {
+            uniform token info:id = "UsdUVTexture"
+            asset inputs:file = @../texture/rocks/disp.jpg@
+            float2 inputs:st.connect = </Ground/ground_mat/stReader.outputs:result>
+            float outputs:r
+        }
+
+        def Shader "normalTexture"
+        {
+            uniform token info:id = "UsdUVTexture"
+            asset inputs:file = @../texture/rocks/nor.jpg@
+            float2 inputs:st.connect = </Ground/ground_mat/stReader.outputs:result>
+            float3 outputs:rgb
+        }
+
+        def Shader "roughnessTexture"
+        {
+            uniform token info:id = "UsdUVTexture"
+            asset inputs:file = @../texture/rocks/rough.jpg@
+            float2 inputs:st.connect = </Ground/ground_mat/stReader.outputs:result>
+            float3 outputs:rgb
+        }
+
+        def Shader "pxrSurface"
+        {
+            uniform token info:id = "PxrSurface"
+            color3f inputs:diffuseColor.connect = </Ground/ground_mat/diffuseTexture.outputs:rgb>
+            color3f inputs:normal.connect = </Ground/ground_mat/normalTexture.outputs:rgb>
+            color3f inputs:roughness.connect = </Ground/ground_mat/roughnessTexture.outputs:rgb>
+            token outputs:surface
+        }
+
+        def Shader "DisplacementShader"
+        {
+            uniform token info:id = "PxrDisplace"
+            float inputs:dispAmount = 0.03
+            float inputs:dispScalar.connect = </Ground/ground_mat/displacementTexture.outputs:r>
+            token outputs:displacement
+        }
+    }
+}
+

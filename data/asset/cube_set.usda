@@ -1,0 +1,38 @@
+#usda 1.0
+(
+    defaultPrim = "Cube_set"
+)
+
+def "Cube_set"
+{
+    def Xform "Ground" (
+        prepend references = @./ground_brick.usda@
+    )
+    {
+    }
+
+    def Xform "Cube"
+    {
+        rel material:binding = </Cube_set/Cube/cube_mat>
+        float xformOp:rotateY = 20
+        double3 xformOp:translate = (-3, 1, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateY"]
+
+        def Cube "cube_geom"
+        {
+        }
+
+        def Material "cube_mat"
+        {
+            token outputs:ri:surface.connect = </Cube_set/Cube/cube_mat/SurfaceShader.outputs:out>
+
+            def Shader "SurfaceShader"
+            {
+                uniform token info:id = "PxrSurface"
+                color3f inputs:diffuseColor = (0.8, 0.6, 0.6)
+                token outputs:out
+            }
+        }
+    }
+}
+

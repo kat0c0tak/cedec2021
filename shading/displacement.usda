@@ -1,0 +1,68 @@
+#usda 1.0
+
+def "Texture"
+{
+    def Mesh "Plane" (
+        prepend references = @../data/model/plane.usda@
+    )
+    {
+        rel material:binding = </Texture/Material>
+    }
+
+    def Material "Material"
+    {
+        token outputs:displacement.connect = </Texture/Material/previewSurface.outputs:displacement>
+        token outputs:surface.connect = </Texture/Material/previewSurface.outputs:sourface>
+
+        def Shader "stReader"
+        {
+            uniform token info:id = "UsdPrimvarReader_float2"
+            token inputs:varname = "st"
+            float2 outputs:result
+        }
+
+        def Shader "diffuseTexture"
+        {
+            uniform token info:id = "UsdUVTexture"
+            asset inputs:file = @../data/texture/gravel/diff.png@
+            float2 inputs:st.connect = </Texture/Material/stReader.outputs:result>
+            float3 outputs:rgb
+        }
+
+        def Shader "displacementTexture"
+        {
+            uniform token info:id = "UsdUVTexture"
+            asset inputs:file = @../data/texture/gravel/disp.png@
+            float2 inputs:st.connect = </Texture/Material/stReader.outputs:result>
+            float outputs:r
+        }
+
+        def Shader "normalTexture"
+        {
+            uniform token info:id = "UsdUVTexture"
+            asset inputs:file = @../data/texture/gravel/nor.png@
+            float2 inputs:st.connect = </Texture/Material/stReader.outputs:result>
+            float3 outputs:rgb
+        }
+
+        def Shader "roughnessTexture"
+        {
+            uniform token info:id = "UsdUVTexture"
+            asset inputs:file = @../data/texture/gravel/rough.png@
+            float2 inputs:st.connect = </Texture/Material/stReader.outputs:result>
+            float3 outputs:rgb
+        }
+
+        def Shader "previewSurface"
+        {
+            uniform token info:id = "UsdPreviewSurface"
+            color3f inputs:diffuseColor.connect = </Texture/Material/diffuseTexture.outputs:rgb>
+            float inputs:displacement.connect = </Texture/Material/displacementTexture.outputs:r>
+            color3f inputs:normal.connect = </Texture/Material/normalTexture.outputs:rgb>
+            color3f inputs:roughness.connect = </Texture/Material/roughnessTexture.outputs:rgb>
+            token outputs:displacement
+            token outputs:sourface
+        }
+    }
+}
+

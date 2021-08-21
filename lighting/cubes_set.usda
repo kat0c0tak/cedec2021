@@ -1,0 +1,52 @@
+#usda 1.0
+(
+    defaultPrim = "Cubes_set"
+)
+
+def "Cubes_set"
+{
+    def Mesh "Floor" (
+        prepend references = @../data/model/plane.usda@
+    )
+    {
+    }
+
+    def Cube "Cube1"
+    {
+        rel material:binding = </Cubes_set/Material/WhiteMat>
+        double3 xformOp:translate = (0, 1, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Cube "Cube2"
+    {
+        rel material:binding = </Cubes_set/Material/WhiteMat>
+        float xformOp:rotateY = 20
+        double3 xformOp:translate = (-3, 1, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateY"]
+    }
+
+    def "Material"
+    {
+        def Material "WhiteMat"
+        {
+            token outputs:ri:surface.connect = </Cubes_set/Material/WhiteMat/SurfaceShader.outputs:out>
+            token outputs:surface.connect = </Cubes_set/Material/WhiteMat/PreviewShader.outputs:surface>
+
+            def Shader "PreviewShader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.9, 0.9, 0.9)
+                token outputs:surface
+            }
+
+            def Shader "SurfaceShader"
+            {
+                uniform token info:id = "PxrSurface"
+                color3f inputs:diffuseColor = (0.9, 0.9, 0.9)
+                token outputs:out
+            }
+        }
+    }
+}
+

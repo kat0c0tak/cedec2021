@@ -1,0 +1,40 @@
+#usda 1.0
+
+def Scope "Shot002"
+{
+    def Scope "Asset"
+    {
+        def Xform "Cube_set" (
+            prepend references = @../data/asset/cube_set.usda@
+        )
+        {
+        }
+    }
+
+    def Scope "Character"
+    {
+        def Xform "Monkey" (
+            prepend references = @../data/asset/monkey.usda@
+        )
+        {
+        }
+    }
+
+    def Scope "Camera"
+    {
+        def Xform "RenderCamera"
+        {
+            double3 xformOp:translate = (0, 2, 15)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+
+            def Camera "renderCamera_cam"
+            {
+            }
+        }
+    }
+
+    def Scope "Light"
+    {
+    }
+}
+

@@ -1,0 +1,18 @@
+#usda 1.0
+
+over "Shot002"
+{
+    over "Character"
+    {
+        over "Monkey"
+        {
+            float xformOp:rotateY:spin.timeSamples = {
+                1: 0,
+                100: 359,
+            }
+            double3 xformOp:translate = (0, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateY:spin"]
+        }
+    }
+}
+

@@ -1,0 +1,20 @@
+#usda 1.0
+
+def "Scene" (
+    prepend references = @./monkey_set.usda@
+)
+{
+    def "Light"
+    {
+        def SphereLight "DiskLight"
+        {
+            float inputs:intensity = 5
+            float inputs:shaping:cone:angle = 30
+            float xformOp:rotateX = -90
+            float xformOp:rotateY = 90
+            double3 xformOp:translate = (0, 4, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateY", "xformOp:rotateX"]
+        }
+    }
+}
+

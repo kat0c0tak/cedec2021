@@ -1,0 +1,15 @@
+#usda 1.0
+
+def "Scene" (
+    prepend references = @./monkey_set.usda@
+)
+{
+    def "Light"
+    {
+        def DomeLight "DomeLight"
+        {
+            asset inputs:texture:file = @../data/texture/hdri/lilienstein_1k.tex@
+        }
+    }
+}
+

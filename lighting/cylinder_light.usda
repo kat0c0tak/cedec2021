@@ -1,0 +1,20 @@
+#usda 1.0
+
+def "Scene" (
+    prepend references = @./monkey_set.usda@
+)
+{
+    def "Light"
+    {
+        def CylinderLight "CylinderLight"
+        {
+            float inputs:intensity = 5
+            bool treatAsLine = 1
+            float xformOp:rotateX = -45
+            float xformOp:rotateY = 90
+            double3 xformOp:translate = (4, 4, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateY", "xformOp:rotateX"]
+        }
+    }
+}
+

@@ -1,0 +1,21 @@
+#usda 1.0
+(
+    endTimeCode = 100
+    startTimeCode = 0
+)
+
+def Xform "spin"
+{
+    float xformOp:rotateY.timeSamples = {
+        0: 0,
+        100: 360,
+    }
+    uniform token[] xformOpOrder = ["xformOp:rotateY"]
+
+    def Mesh "monkey_geo" (
+        prepend references = @../data/model/monkey.usda@
+    )
+    {
+    }
+}
+

@@ -1,0 +1,29 @@
+#usda 1.0
+
+over "Shot002"
+{
+    over "Light"
+    {
+        def DomeLight "Dome"
+        {
+            asset inputs:texture:file = @../data/texture/hdri/lilienstein.tex@
+            float xformOp:rotateY.timeSamples = {
+                101: 90,
+                200: 450,
+            }
+            uniform token[] xformOpOrder = ["xformOp:rotateY"]
+        }
+
+        def DistantLight "Distant"
+        {
+            float inputs:intensity = 100000
+            float xformOp:rotateX = -45
+            float xformOp:rotateY.timeSamples = {
+                101: 90,
+                200: 450,
+            }
+            uniform token[] xformOpOrder = ["xformOp:rotateX", "xformOp:rotateY"]
+        }
+    }
+}
+

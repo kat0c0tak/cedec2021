@@ -1,0 +1,8 @@
+This gravel images were removed form the web site https://polyhaven.com/textures
+Please use different images.
+
+Used file names:
+- diff.png
+- disp.png
+- nor.png
+- rough.png

@@ -1,0 +1,23 @@
+#usda 1.0
+
+def "Simple"
+{
+    def Sphere "Sphere"
+    {
+        rel material:binding = </Simple/Material>
+    }
+
+    def Material "Material"
+    {
+        color3f inputs:diff = (1, 0, 0)
+        token outputs:surface.connect = </Simple/Material/Shader.outputs:surface>
+
+        def Shader "Shader"
+        {
+            uniform token info:id = "UsdPreviewSurface"
+            color3f inputs:diffuseColor.connect = </Simple/Material.inputs:diff>
+            token outputs:surface
+        }
+    }
+}
+

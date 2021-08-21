@@ -1,0 +1,27 @@
+#usda 1.0
+(
+    defaultPrim = "Monkey"
+)
+
+def "Monkey"
+{
+    def Mesh "monkey_geom" (
+        prepend references = @../model/monkey.usda@
+    )
+    {
+        rel material:binding = </Monkey/monkey_mat>
+    }
+
+    def Material "monkey_mat"
+    {
+        token outputs:ri:surface.connect = </Monkey/monkey_mat/SurfaceShader.outputs:out>
+
+        def Shader "SurfaceShader"
+        {
+            uniform token info:id = "PxrSurface"
+            color3f inputs:diffuseColor = (0.6, 0.6, 0.9)
+            token outputs:out
+        }
+    }
+}
+
